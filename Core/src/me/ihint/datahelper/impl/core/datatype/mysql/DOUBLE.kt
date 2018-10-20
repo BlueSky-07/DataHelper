@@ -1,0 +1,62 @@
+package me.ihint.datahelper.impl.core.datatype.mysql
+
+import me.ihint.datahelper.core.Data
+import me.ihint.datahelper.core.DataType
+import me.ihint.datahelper.core.Entry
+import me.ihint.datahelper.exception.ValueIsNullException
+import me.ihint.datahelper.exception.VerifyNotPassException
+import java.math.BigDecimal
+import java.math.RoundingMode
+
+/**
+ * DOUBLE : DataType
+ *
+ * config: Config
+ *      (FOR READING)
+ *          ["max"] : Double?        // value should be less than it, not included itself
+ *          ["min"] : Double?        // value should be greater then it, included itself
+ *
+ *      (FOR GENERATING)
+ *          ["fix"] : Int?           // value will be fixed, rounding mode set as RoundingMode.FLOOR
+ */
+
+object DOUBLE : DataType {
+	override fun verify(data: Data, allowNull: Boolean): Boolean =
+			when (data.value) {
+				null -> allowNull
+				else -> {
+					val config = data.config
+					val number: Double? = try {
+						java.lang.Double.valueOf(data.value!!)
+					} catch (e: Exception) {
+						null
+					}
+					when (number) {
+						null -> false
+						else -> {
+							val max: Double? = config["max"] as Double?
+							val min: Double? = config["min"] as Double?
+							when {
+								(max != null && number >= max) || (min != null && number < min) -> false
+								else -> true
+							}
+						}
+					}
+				}
+			}
+	
+	override fun toEntry(data: Data): Entry =
+			if (verify(data, false))
+				Entry(
+						"`${data.fieldName}`",
+						when (data.config["fix"] as Int?) {
+							null -> data.value!!
+							else -> BigDecimal(data.value!!)
+									.setScale(data.config["fix"] as Int, RoundingMode.FLOOR)
+									.toString()
+						})
+			else when (data.value) {
+				null -> throw ValueIsNullException()
+				else -> throw VerifyNotPassException()
+			}
+}
