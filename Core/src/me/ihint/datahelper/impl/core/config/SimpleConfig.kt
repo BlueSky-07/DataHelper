@@ -1,7 +1,7 @@
 package me.ihint.datahelper.impl.core.config
 
 import me.ihint.datahelper.core.Config
-import me.ihint.datahelper.exception.DataHelperException
+import me.ihint.datahelper.exception.ItemAlreadySetException
 
 /**
  * SimpleConfig(Config)
@@ -10,12 +10,12 @@ import me.ihint.datahelper.exception.DataHelperException
  * you cannot change a field's value once you set
  */
 
-class SimpleConfig : Config {
+class SimpleConfig() : Config {
 	private val config = HashMap<String, Any>()
 	
 	override operator fun set(key: String, value: Any) =
 			when (config.containsKey(key)) {
-				true -> throw ConfigAlraadySetException()
+				true -> throw ItemAlreadySetException()
 				else -> config[key] = value
 			}
 	
@@ -24,6 +24,4 @@ class SimpleConfig : Config {
 				true -> config[key]
 				else -> null
 			}
-	
-	class ConfigAlraadySetException : DataHelperException()
 }

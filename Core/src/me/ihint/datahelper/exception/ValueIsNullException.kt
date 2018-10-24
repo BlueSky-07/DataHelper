@@ -14,4 +14,4 @@ package me.ihint.datahelper.exception
  *      set value before using it
  */
 
-class ValueIsNullException : VerifyNotPassException()
+open class ValueIsNullException : VerifyNotPassException()

@@ -1,17 +1,16 @@
 package me.ihint.datahelper.exception
 
-import java.lang.Exception
-
 /**
- * DataHelperException
+ * BundleException
+ *     : DataHelperException
  *     : Exception
  *     : Throwable(Serializable)
  *
  * When thrown:
- *      something wrong when processing data
+ *      something wrong when processing bundle
  *
  * Solution:
  *      check exception's detail
  */
 
-open class DataHelperException : Exception()
+open class BundleException : DataHelperException()
