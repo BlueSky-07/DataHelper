@@ -19,10 +19,10 @@ import me.ihint.datahelper.exception.VerifyNotPassException
 
 object BOOLEAN : DataType {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
-			when (data.value) {
+			when (val value: String? = data.value) {
 				null -> allowNull
 				else -> {
-					val str = data.value!!.toLowerCase()
+					val str = value.toLowerCase()
 					when (str) {
 						"true", "false", "1", "0" -> true
 						else -> false

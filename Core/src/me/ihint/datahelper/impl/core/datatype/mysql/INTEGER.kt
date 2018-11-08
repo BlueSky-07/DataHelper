@@ -19,12 +19,12 @@ import me.ihint.datahelper.exception.VerifyNotPassException
 
 object INTEGER : DataType {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
-			when (data.value) {
+			when (val value: String? = data.value) {
 				null -> allowNull
 				else -> {
 					val config = data.config
 					val number: Int? = try {
-						Integer.valueOf(data.value!!)
+						Integer.valueOf(value)
 					} catch (e: Exception) {
 						null
 					}

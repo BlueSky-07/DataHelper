@@ -19,13 +19,13 @@ import me.ihint.datahelper.exception.VerifyNotPassException
 
 object TEXT : DataType {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
-			when (data.value) {
+			when (val value: String? = data.value) {
 				null -> allowNull
 				else -> {
 					val config = data.config
 					val max: Int? = config["max"] as Int?
 					val min: Int? = config["min"] as Int?
-					val length = data.value!!.length
+					val length = value.length
 					when {
 						(max != null && length >= max) || (min != null && length < min) -> false
 						else -> true

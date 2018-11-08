@@ -21,13 +21,13 @@ import java.time.format.DateTimeFormatter
 
 object TIMESTAMP : DataType {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
-			when (data.value) {
+			when (val value: String? = data.value) {
 				null -> allowNull
 				else -> {
 					val config = data.config
 					val formatter: DateTimeFormatter = config["read"] as DateTimeFormatter
 					try {
-						LocalDateTime.parse(data.value!!, formatter)
+						LocalDateTime.parse(value, formatter)
 						true
 					} catch (e: Exception) {
 						false

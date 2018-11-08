@@ -22,12 +22,12 @@ import java.math.RoundingMode
 
 object DOUBLE : DataType {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
-			when (data.value) {
+			when (val value: String? = data.value) {
 				null -> allowNull
 				else -> {
 					val config = data.config
 					val number: Double? = try {
-						java.lang.Double.valueOf(data.value!!)
+						java.lang.Double.valueOf(value)
 					} catch (e: Exception) {
 						null
 					}
@@ -49,10 +49,10 @@ object DOUBLE : DataType {
 			if (verify(data, false))
 				Entry(
 						"`${data.fieldName}`",
-						when (data.config["fix"] as Int?) {
+						when (val fix: Int? = data.config["fix"] as Int?) {
 							null -> data.value!!
 							else -> BigDecimal(data.value!!)
-									.setScale(data.config["fix"] as Int, RoundingMode.FLOOR)
+									.setScale(fix, RoundingMode.FLOOR)
 									.toString()
 						})
 			else when (data.value) {

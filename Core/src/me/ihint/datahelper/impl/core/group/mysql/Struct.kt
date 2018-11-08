@@ -26,8 +26,8 @@ class Struct(
 		}
 	}, config)
 	
-	override fun getTableName(): String? = when (config["tablename"]) {
-		is String? -> config["tablename"] as String?
+	override fun getTableName(): String? = when (val tablename: Any? = config["tablename"]) {
+		is String? -> tablename
 		else -> throw ItemNotValidException()
 	}
 	
@@ -35,8 +35,8 @@ class Struct(
 		config["tablename"] = tablename
 	}
 	
-	override fun getNotNullList(): List<Field>? = when (config["notnull"]) {
-		is List<*>? -> config["notnull"] as List<Field>?
+	override fun getNotNullList(): List<Field>? = when (val notnull: Any? = config["notnull"]) {
+		is List<*>? -> notnull as List<Field>?
 		else -> throw ItemNotValidException()
 	}
 	
@@ -44,8 +44,8 @@ class Struct(
 		config["notnull"] = list
 	}
 	
-	override fun getOrderList(): List<Field>? = when (config["order"]) {
-		is List<*>? -> config["order"] as List<Field>?
+	override fun getOrderList(): List<Field>? = when (val order: Any? = config["order"]) {
+		is List<*>? -> order as List<Field>?
 		else -> throw ItemNotValidException()
 	}
 	
