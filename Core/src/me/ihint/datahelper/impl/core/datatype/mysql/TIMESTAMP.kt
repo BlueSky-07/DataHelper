@@ -1,7 +1,6 @@
 package me.ihint.datahelper.impl.core.datatype.mysql
 
 import me.ihint.datahelper.core.Data
-import me.ihint.datahelper.core.DataType
 import me.ihint.datahelper.core.Entry
 import me.ihint.datahelper.exception.ValueIsNullException
 import me.ihint.datahelper.exception.VerifyNotPassException
@@ -9,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * TIMESTAMP : DataType
+ * TIMESTAMP : MysqlDataType(DataType)
  *
  * config: Config
  *      (FOR READING)
@@ -19,7 +18,7 @@ import java.time.format.DateTimeFormatter
  *          ["write"] : DateTimeFormatter        // writing format
  */
 
-object TIMESTAMP : DataType {
+object TIMESTAMP : MysqlDataType() {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
 			when (val value: String? = data.value) {
 				null -> allowNull

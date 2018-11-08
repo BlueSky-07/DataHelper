@@ -9,7 +9,7 @@ import me.ihint.datahelper.impl.core.bundle.SimpleBundle
 import me.ihint.datahelper.impl.core.config.SimpleConfig
 
 /**
- * Record(Group<Data, Any>)
+ * Record(Group<Data>)
  *
  * one record of a table
  */
@@ -18,7 +18,7 @@ class Record(
 		override val bundle: SimpleBundle<Data>,
 		override val config: SimpleConfig
 ) : Group<Data>, MysqlProperties {
-	fun get(fieldName: String): String? = when (bundle[fieldName]) {
+	operator fun get(fieldName: String): String? = when (bundle[fieldName]) {
 		null -> throw FieldNotFoundException()
 		else -> bundle[fieldName]!!.value
 	}

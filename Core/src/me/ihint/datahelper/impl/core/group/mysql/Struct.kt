@@ -9,7 +9,7 @@ import me.ihint.datahelper.impl.core.bundle.SimpleBundle
 import me.ihint.datahelper.impl.core.config.SimpleConfig
 
 /**
- * Struct(Group<Field, Any>)
+ * Struct(Group<Field>)
  *
  * one struct of a table
  */

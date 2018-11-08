@@ -1,7 +1,6 @@
 package me.ihint.datahelper.impl.core.datatype.mysql
 
 import me.ihint.datahelper.core.Data
-import me.ihint.datahelper.core.DataType
 import me.ihint.datahelper.core.Entry
 import me.ihint.datahelper.exception.ValueIsNullException
 import me.ihint.datahelper.exception.VerifyNotPassException
@@ -9,7 +8,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 /**
- * DOUBLE : DataType
+ * DOUBLE : MysqlDataType(DataType)
  *
  * config: Config
  *      (FOR READING)
@@ -20,7 +19,7 @@ import java.math.RoundingMode
  *          ["fix"] : Int?           // value will be fixed, rounding mode set as RoundingMode.FLOOR
  */
 
-object DOUBLE : DataType {
+object DOUBLE : MysqlDataType() {
 	override fun verify(data: Data, allowNull: Boolean): Boolean =
 			when (val value: String? = data.value) {
 				null -> allowNull
