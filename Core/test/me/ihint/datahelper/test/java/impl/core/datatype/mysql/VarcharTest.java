@@ -1,6 +1,6 @@
 package me.ihint.datahelper.test.java.impl.core.datatype.mysql;
 
-import me.ihint.datahelper.exception.ValueIsNullException;
+import me.ihint.datahelper.exception.verify.ValueIsNullException;
 import kotlin.TypeCastException;
 import me.ihint.datahelper.core.Data;
 import me.ihint.datahelper.core.Field;
@@ -14,7 +14,7 @@ public class VarcharTest {
         SimpleConfig config = new SimpleConfig();
         config.set("length", 5);
         Field field = new Field("fieldname", VARCHAR.INSTANCE, config);
-        
+
         Data data = field.newData();
         assert (data.verify(false) == false);
         assert (data.verify(true) == true);
@@ -24,21 +24,21 @@ public class VarcharTest {
         } catch (Exception e) {
             assert (e instanceof ValueIsNullException);
         }
-        
+
         data.setValue("123");
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("`123`"));
-        
+
         data.setValue("123456");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         config.set("pattern", Pattern.compile("[\\s]+"));
         data = field.newData("123");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         config = new SimpleConfig();
         config.set("length", 5);
         config.set("pattern", Pattern.compile("[\\d]+"));
@@ -47,7 +47,7 @@ public class VarcharTest {
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("`123`"));
-        
+
         data = new Field("fieldname", VARCHAR.INSTANCE, new SimpleConfig()).newData();
         data.setValue("123");
         try {
@@ -56,7 +56,7 @@ public class VarcharTest {
         } catch (Exception e) {
             assert (e instanceof TypeCastException);
         }
-        
+
         System.out.println("VARCHAR tests passed");
     }
 }

@@ -7,24 +7,25 @@ package me.ihint.datahelper.core
  */
 
 class Data(
-		var value: String?,
-		val field: Field
+        var value: String?,
+        val field: Field
 ) {
-	val fieldName: String = field.name
-	val type: DataType = field.type
-	val config: Config = field.config
-	
-	/**
-	 * copy a unit
-	 */
-	fun clone(data: Data) = Data(
-			data.value,
-			data.field
-	)
-	
-	/**
-	 * check value's validity, depends on the implement of DataType, and its field's config
-	 */
-	fun verify(allowNull: Boolean): Boolean =
-			type.verify(this, allowNull)
+    /**
+     * copy a unit
+     */
+    constructor(data: Data) : this(data.value, data.field)
+
+    val fieldName: String = field.name
+    val type: DataType = field.type
+    val config: Config = field.config
+
+    fun clear() {
+        this.value = null
+    }
+
+    /**
+     * check value's validity, depends on the implement of DataType, and its field's config
+     */
+    fun verify(allowNull: Boolean): Boolean =
+            type.verify(this, allowNull)
 }

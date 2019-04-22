@@ -8,13 +8,13 @@ package me.ihint.datahelper.core
  */
 
 interface Config {
-	/**
-	 * set a value for a configured field
-	 */
-	fun set(key: String, value: Any): Any?
-	
-	/**
-	 * get the value of a configured field
-	 */
-	operator fun get(key: String): Any?
+    /**
+     * set a value for a configured field
+     */
+    fun set(key: String, value: Any): Any?
+
+    /**
+     * get the value of a configured field
+     */
+    operator fun get(key: String): Any?
 }

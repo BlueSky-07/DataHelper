@@ -7,19 +7,19 @@ import me.ihint.datahelper.core.Field
  *
  * Properties:
  *
- *      config["tablename"] : String
- *        config["notnull"] : List<Field>
- *          config["order"] : List<Field>
+ *      config["#table-name"] : String
+ *   config["#not-null-list"] : List<Field>
+ *      config["#order-list"] : List<Field>
  *
  */
 
 interface MysqlProperties {
-	fun getTableName(): String?
-	fun setTableName(tablename: String)
-	
-	fun getNotNullList(): List<Field>?
-	fun setNotNullList(list: List<Field>)
-	
-	fun getOrderList(): List<Field>?
-	fun setOrderList(list: List<Field>)
+    fun getTableName(): String?
+    fun setTableName(tableName: String)
+
+    fun getNotNullList(): List<Field>?
+    fun setNotNullList(list: List<Field>)
+
+    fun getOrderList(): List<Field>?
+    fun setOrderList(list: List<Field>)
 }

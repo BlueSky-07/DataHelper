@@ -7,15 +7,15 @@ package me.ihint.datahelper.core
  */
 
 class Field(
-		val name: String,
-		val type: DataType,
-		val config: Config
+        val name: String,
+        val type: DataType,
+        val config: Config
 ) {
-	fun newData(): Data = Data(
-			null, this
-	)
-	
-	fun newData(value: String): Data = Data(
-			value, this
-	)
+    fun newData(): Data = Data(
+            null, this
+    )
+
+    fun newData(value: String): Data = Data(
+            value, this
+    )
 }

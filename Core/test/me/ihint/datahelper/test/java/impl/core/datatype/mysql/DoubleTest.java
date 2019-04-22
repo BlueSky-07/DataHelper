@@ -1,6 +1,6 @@
 package me.ihint.datahelper.test.java.impl.core.datatype.mysql;
 
-import me.ihint.datahelper.exception.ValueIsNullException;
+import me.ihint.datahelper.exception.verify.ValueIsNullException;
 import me.ihint.datahelper.core.Data;
 import me.ihint.datahelper.core.Field;
 import me.ihint.datahelper.impl.core.config.SimpleConfig;
@@ -10,7 +10,7 @@ public class DoubleTest {
     public static void test() {
         SimpleConfig config = new SimpleConfig();
         Field field = new Field("fieldname", DOUBLE.INSTANCE, config);
-        
+
         Data data = field.newData();
         assert (data.verify(false) == false);
         assert (data.verify(true) == true);
@@ -20,11 +20,11 @@ public class DoubleTest {
         } catch (Exception e) {
             assert (e instanceof ValueIsNullException);
         }
-        
+
         data.setValue("abc");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         config.set("max", 1.23d);
         data = field.newData("1.23");
         assert (data.verify(false) == false);
@@ -33,7 +33,7 @@ public class DoubleTest {
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (DOUBLE.INSTANCE.toEntry(data).getValue().equals("1.22"));
-        
+
         config = new SimpleConfig();
         config.set("min", 1.23d);
         field = new Field("fieldname", DOUBLE.INSTANCE, config);
@@ -44,7 +44,7 @@ public class DoubleTest {
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (DOUBLE.INSTANCE.toEntry(data).getValue().equals("1.23"));
-        
+
         config = new SimpleConfig();
         config.set("max", 1.24d);
         config.set("min", 1.23d);
@@ -56,13 +56,13 @@ public class DoubleTest {
         data.setValue("1.24");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         config.set("fix", 2);
         data = field.newData("1.234");
         assert (DOUBLE.INSTANCE.toEntry(data).getValue().equals("1.23"));
         data.setValue("1.235");
         assert (DOUBLE.INSTANCE.toEntry(data).getValue().equals("1.23"));
-        
+
         System.out.println("DOUBLE tests passed");
     }
 }

@@ -1,5 +1,7 @@
 package me.ihint.datahelper.exception
 
+import me.ihint.datahelper.exception.DataHelperException
+
 /**
  * ConfigException
  *     : DataHelperException

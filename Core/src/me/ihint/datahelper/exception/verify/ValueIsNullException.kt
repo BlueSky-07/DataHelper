@@ -1,7 +1,9 @@
-package me.ihint.datahelper.exception
+package me.ihint.datahelper.exception.verify
+
+import me.ihint.datahelper.exception.VerifyNotPassException
 
 /**
- * DataHelperException
+ * ValueIsNullException
  *     : VerifyNotPassException
  *     : DataHelperException
  *     : Exception

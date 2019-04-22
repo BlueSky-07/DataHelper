@@ -8,7 +8,7 @@ package me.ihint.datahelper.core
  */
 
 class Entry(val key: String, val value: String) {
-	override fun toString(): String {
-		return "{$key: $value}"
-	}
+    override fun toString(): String {
+        return "{$key: $value}"
+    }
 }

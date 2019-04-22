@@ -1,4 +1,6 @@
-package me.ihint.datahelper.exception
+package me.ihint.datahelper.exception.config
+
+import me.ihint.datahelper.exception.ConfigException
 
 /**
  * ItemAlreadySetException

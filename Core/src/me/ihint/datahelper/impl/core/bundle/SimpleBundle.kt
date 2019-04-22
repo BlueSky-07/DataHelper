@@ -11,19 +11,19 @@ import me.ihint.datahelper.core.Bundle
  */
 
 class SimpleBundle<T>() : Bundle<T>, HashMap<String, T>() {
-	constructor(simpleBundle: SimpleBundle<T>) : this() {
-		simpleBundle.forEach { (key, value) ->
-			run {
-				this[key] = value
-			}
-		}
-	}
-	
-	override fun get(key: String): T? {
-		return super.get(key)
-	}
-	
-	operator fun set(key: String, value: T): T? {
-		return super.put(key, value)
-	}
+    constructor(simpleBundle: SimpleBundle<T>) : this() {
+        simpleBundle.forEach { (key, value) ->
+            run {
+                this[key] = value
+            }
+        }
+    }
+
+    override fun get(key: String): T? {
+        return super.get(key)
+    }
+
+    operator fun set(key: String, value: T): T? {
+        return super.put(key, value)
+    }
 }

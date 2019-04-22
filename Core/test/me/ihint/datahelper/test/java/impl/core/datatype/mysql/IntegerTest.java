@@ -1,6 +1,6 @@
 package me.ihint.datahelper.test.java.impl.core.datatype.mysql;
 
-import me.ihint.datahelper.exception.ValueIsNullException;
+import me.ihint.datahelper.exception.verify.ValueIsNullException;
 import me.ihint.datahelper.core.Data;
 import me.ihint.datahelper.core.Field;
 import me.ihint.datahelper.impl.core.config.SimpleConfig;
@@ -10,7 +10,7 @@ public class IntegerTest {
     public static void test() {
         SimpleConfig config = new SimpleConfig();
         Field field = new Field("fieldname", INTEGER.INSTANCE, config);
-        
+
         Data data = field.newData();
         assert (data.verify(false) == false);
         assert (data.verify(true) == true);
@@ -20,11 +20,11 @@ public class IntegerTest {
         } catch (Exception e) {
             assert (e instanceof ValueIsNullException);
         }
-        
+
         data.setValue("abc");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         config.set("max", 123);
         data = field.newData("123");
         assert (data.verify(false) == false);
@@ -33,7 +33,7 @@ public class IntegerTest {
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (INTEGER.INSTANCE.toEntry(data).getValue().equals("122"));
-        
+
         config = new SimpleConfig();
         field = new Field("fieldname", INTEGER.INSTANCE, config);
         config.set("min", 123);
@@ -44,7 +44,7 @@ public class IntegerTest {
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
         assert (INTEGER.INSTANCE.toEntry(data).getValue().equals("123"));
-        
+
         config = new SimpleConfig();
         field = new Field("fieldname", INTEGER.INSTANCE, config);
         config.set("min", 123);
@@ -56,7 +56,7 @@ public class IntegerTest {
         data.setValue("124");
         assert (data.verify(false) == false);
         assert (data.verify(true) == false);
-        
+
         System.out.println("INTEGER tests passed");
     }
 }

@@ -8,7 +8,7 @@ public class TestAll {
         testDatatypeMysql();
         testGroupMysql();
     }
-    
+
     private static void testDatatypeMysql() {
         IntegerTest.test();
         DoubleTest.test();
@@ -17,7 +17,7 @@ public class TestAll {
         TextTest.test();
         TimestampTest.test();
     }
-    
+
     private static void testGroupMysql() {
         GroupTest.test();
     }

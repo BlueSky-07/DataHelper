@@ -7,6 +7,6 @@ package me.ihint.datahelper.core
  */
 
 interface Group<T> {
-	val bundle: Bundle<T>
-	val config: Config
+    val bundle: Bundle<T>
+    val config: Config
 }

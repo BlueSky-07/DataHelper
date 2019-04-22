@@ -1,4 +1,6 @@
-package me.ihint.datahelper.exception
+package me.ihint.datahelper.exception.bundle
+
+import me.ihint.datahelper.exception.BundleException
 
 /**
  * FieldNotFoundException
