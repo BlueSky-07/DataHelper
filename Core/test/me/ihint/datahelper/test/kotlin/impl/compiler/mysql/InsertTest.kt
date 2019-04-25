@@ -4,16 +4,17 @@ import me.ihint.datahelper.core.Field
 import me.ihint.datahelper.impl.compiler.mysql.SQLCompiler
 import me.ihint.datahelper.impl.core.bundle.SimpleBundle
 import me.ihint.datahelper.impl.core.config.SimpleConfig
-import me.ihint.datahelper.impl.core.datatype.mysql.BOOLEAN
-import me.ihint.datahelper.impl.core.datatype.mysql.DOUBLE
-import me.ihint.datahelper.impl.core.datatype.mysql.INTEGER
-import me.ihint.datahelper.impl.core.datatype.mysql.VARCHAR
+import me.ihint.datahelper.impl.core.datatype.mysql.*
 import me.ihint.datahelper.impl.core.group.mysql.Record
 import me.ihint.datahelper.impl.core.group.mysql.Struct
+import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
 object InsertTest {
     private var struct: Struct
+    private val FORMATTER_ISO = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private val FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
+    
     init {
         val fields = SimpleBundle<Field>()
         fields["id"] = Field("id", INTEGER, SimpleConfig())
@@ -36,6 +37,16 @@ object InsertTest {
         configOfDouble["max"] = 2.5
         configOfDouble["fix"] = 3
         fields["double"] = Field("double", DOUBLE, configOfDouble)
+        
+        val configOfText = SimpleConfig()
+        configOfText["max"] = 10
+        configOfText["min"] = 5
+        fields["text"] = Field("text", TEXT, configOfText)
+        
+        val configOfTimeStamp = SimpleConfig()
+        configOfTimeStamp["read"] = FORMATTER_ISO
+        configOfTimeStamp["write"] = FORMATTER_TIMESTAMP
+        fields["timestamp"] = Field("timestamp", TIMESTAMP, configOfTimeStamp)
 
         val config = SimpleConfig()
         config.set("writable", true)
@@ -52,8 +63,12 @@ object InsertTest {
 
     fun testCase1() {
         val record: Record = struct.newRecord()
-        record["boolean"] = "true"
         record["varchar"] = "HelloKotlinLang1"
+        record["integer"] = "7"
+        record["boolean"] = "true"
+        record["double"] = "1.87654321"
+        record["text"] = "abcdefg"
+        record["timestamp"] = "2011-12-03T10:15:30.000Z"
         println(SQLCompiler.insert(record))
 
     }
