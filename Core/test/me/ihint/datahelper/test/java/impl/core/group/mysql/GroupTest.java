@@ -15,9 +15,9 @@ public class GroupTest {
         SimpleBundle<Field> fields = new SimpleBundle<>();
         fields.set("id", new Field("id", INTEGER.INSTANCE, new SimpleConfig()));
     
-        SimpleConfig configOfVarchar = new SimpleConfig();
-        configOfVarchar.set("length", 15);
-        fields.set("username", new Field("id", VARCHAR.INSTANCE, configOfVarchar));
+        SimpleConfig configOfUsername = new SimpleConfig();
+        configOfUsername.set("length", 15);
+        fields.set("username", new Field("username", VARCHAR.INSTANCE, configOfUsername));
     
         SimpleConfig configOfAge = new SimpleConfig();
         configOfAge.set("min", 0);

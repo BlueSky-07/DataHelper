@@ -1,7 +1,5 @@
 package me.ihint.datahelper.exception
 
-import me.ihint.datahelper.exception.DataHelperException
-
 /**
  * BundleException
  *     : DataHelperException
@@ -9,7 +7,7 @@ import me.ihint.datahelper.exception.DataHelperException
  *     : Throwable(Serializable)
  *
  * When thrown:
- *      something wrong when processing bundle
+ *      something wrong when processing with bundle
  *
  * Solution:
  *      check exception's detail

@@ -21,8 +21,7 @@ object BOOLEAN : MysqlDataType() {
             when (val value: String? = data.value) {
                 null -> allowNull
                 else -> {
-                    val str = value.toLowerCase()
-                    when (str) {
+                    when (value.toLowerCase()) {
                         "true", "false", "1", "0" -> true
                         else -> false
                     }

@@ -23,7 +23,7 @@ class Struct(
                 it[fieldName] = field.newData()
             }
         }
-    }, config)
+    }, SimpleConfig(config))
 
     override fun getTableName(): String? = when (val tableName: Any? = config["#table-name"]) {
         is String? -> tableName

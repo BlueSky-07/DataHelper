@@ -64,7 +64,6 @@ class Record(
             run {
                 data.clear()
             }
-
         }
     }
 
@@ -87,5 +86,19 @@ class Record(
             }
             count
         }
+    }
+
+    fun verify(allowNull: Boolean): Boolean {
+        var result = true
+        bundle.forEach { (_, data) ->
+            run {
+                result = result && data.verify(allowNull)
+            }
+        }
+        return result
+    }
+
+    fun verify(fieldName: String, allowNull: Boolean): Boolean {
+        return bundle[fieldName]!!.verify(allowNull)
     }
 }

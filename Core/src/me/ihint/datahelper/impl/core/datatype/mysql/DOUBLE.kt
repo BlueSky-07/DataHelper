@@ -25,12 +25,11 @@ object DOUBLE : MysqlDataType() {
                 null -> allowNull
                 else -> {
                     val config = data.config
-                    val number: Double? = try {
+                    when (val number: Double? = try {
                         java.lang.Double.valueOf(value)
                     } catch (e: Exception) {
                         null
-                    }
-                    when (number) {
+                    }) {
                         null -> false
                         else -> {
                             val max: Double? = config["max"] as Double?

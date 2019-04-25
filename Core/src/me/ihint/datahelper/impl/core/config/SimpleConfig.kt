@@ -11,7 +11,15 @@ import me.ihint.datahelper.exception.config.ItemAlreadySetException
  */
 
 class SimpleConfig : Config {
-    private val config = HashMap<String, Any>()
+    private val config: HashMap<String, Any>
+
+    constructor() {
+        config = HashMap()
+    }
+
+    constructor(config: SimpleConfig) {
+        this.config = HashMap(config.config)
+    }
 
     override operator fun set(key: String, value: Any) =
             when (config.containsKey(key)) {

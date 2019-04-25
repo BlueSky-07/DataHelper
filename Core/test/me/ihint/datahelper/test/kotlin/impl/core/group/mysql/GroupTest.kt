@@ -13,9 +13,9 @@ object GroupTest {
         val fields = SimpleBundle<Field>()
         fields["id"] = Field("id", INTEGER, SimpleConfig())
 
-        val configOfVarchar = SimpleConfig()
-        configOfVarchar["length"] = 15
-        fields["username"] = Field("id", VARCHAR, configOfVarchar)
+        val configOfUsername = SimpleConfig()
+        configOfUsername["length"] = 15
+        fields["username"] = Field("username", VARCHAR, configOfUsername)
 
         val configOfAge = SimpleConfig()
         configOfAge["min"] = 0

@@ -22,12 +22,11 @@ object INTEGER : MysqlDataType() {
                 null -> allowNull
                 else -> {
                     val config = data.config
-                    val number: Int? = try {
+                    when (val number: Int? = try {
                         Integer.valueOf(value)
                     } catch (e: Exception) {
                         null
-                    }
-                    when (number) {
+                    }) {
                         null -> false
                         else -> {
                             val max: Int? = config["max"] as Int?

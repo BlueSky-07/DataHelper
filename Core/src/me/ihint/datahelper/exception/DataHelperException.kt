@@ -8,7 +8,7 @@ import java.lang.Exception
  *     : Throwable(Serializable)
  *
  * When thrown:
- *      something wrong when processing data
+ *      something wrong when processing with data
  *
  * Solution:
  *      check exception's detail

@@ -1,7 +1,5 @@
 package me.ihint.datahelper.exception
 
-import me.ihint.datahelper.exception.DataHelperException
-
 /**
  * VerifyNotPassException
  *     : DataHelperException

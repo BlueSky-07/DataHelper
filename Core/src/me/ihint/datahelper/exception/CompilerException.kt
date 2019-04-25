@@ -1,16 +1,16 @@
 package me.ihint.datahelper.exception
 
 /**
- * ConfigException
+ * CompilerException
  *     : DataHelperException
  *     : Exception
  *     : Throwable(Serializable)
  *
  * When thrown:
- *      something wrong when processing with config
+ *      something wrong when processing with compiler
  *
  * Solution:
- *      check exception's detail
+ *      check value of Group<Data>
  */
 
-open class ConfigException : DataHelperException()
+open class CompilerException : DataHelperException()
