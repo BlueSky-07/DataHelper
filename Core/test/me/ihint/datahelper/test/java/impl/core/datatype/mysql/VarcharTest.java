@@ -28,7 +28,7 @@ public class VarcharTest {
         data.setValue("123");
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
-        assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("`123`"));
+        assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("'123'"));
 
         data.setValue("123456");
         assert (data.verify(false) == false);
@@ -46,7 +46,7 @@ public class VarcharTest {
         data = field.newData("123");
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
-        assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("`123`"));
+        assert (VARCHAR.INSTANCE.toEntry(data).getValue().equals("'123'"));
 
         data = new Field("fieldname", VARCHAR.INSTANCE, new SimpleConfig()).newData();
         data.setValue("123");

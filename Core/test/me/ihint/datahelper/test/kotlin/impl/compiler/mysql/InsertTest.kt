@@ -39,7 +39,7 @@ object InsertTest {
         fields["double"] = Field("double", DOUBLE, configOfDouble)
         
         val configOfText = SimpleConfig()
-        configOfText["max"] = 10
+        configOfText["max"] = 100
         configOfText["min"] = 5
         fields["text"] = Field("text", TEXT, configOfText)
         
@@ -67,7 +67,7 @@ object InsertTest {
         record["integer"] = "7"
         record["boolean"] = "true"
         record["double"] = "1.87654321"
-        record["text"] = "abcdefg"
+        record["text"] = "This is SQL Script Generator: \n\\'Hello World'"
         record["timestamp"] = "2011-12-03T10:15:30.000Z"
         println(SQLCompiler.insert(record))
 

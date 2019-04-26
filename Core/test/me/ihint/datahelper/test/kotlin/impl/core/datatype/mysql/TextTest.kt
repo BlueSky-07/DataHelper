@@ -23,7 +23,7 @@ object TextTest {
         data.value = "123"
         assert(data.verify(false) == true)
         assert(data.verify(true) == true)
-        assert(TEXT.toEntry(data).value == "`123`")
+        assert(TEXT.toEntry(data).value == "'123'")
 
         config.set("max", 5)
         data = field.newData("12345")

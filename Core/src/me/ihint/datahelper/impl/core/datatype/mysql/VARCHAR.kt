@@ -11,7 +11,7 @@ import java.util.regex.Pattern
  *
  * config: Config
  *      (FOR READING)
- *           ["length"] : Int             // the max length of value
+ *           ["length"] : Int             // required, the max length of value
  *          ["pattern"] : Pattern?        // regex check when it set
  *
  *      (FOR GENERATING)
@@ -34,7 +34,10 @@ object VARCHAR : MysqlDataType() {
     override fun toEntry(data: Data): Entry =
             if (verify(data, false)) Entry(
                     "`${data.fieldName}`",
-                    "`${data.value!!.replace("\\", "\\\\")}`"
+                    "'${data.value!!
+                            .replace("\\", "\\\\")
+                            .replace("'", "''")
+                    }'"
             )
             else when (data.value) {
                 null -> throw ValueIsNullException()

@@ -35,7 +35,10 @@ object TEXT : MysqlDataType() {
     override fun toEntry(data: Data): Entry =
             if (verify(data, false)) Entry(
                     "`${data.fieldName}`",
-                    "`${data.value!!.replace("\\", "\\\\")}`"
+                    "'${data.value!!
+                            .replace("\\", "\\\\")
+                            .replace("'", "''")
+                    }'"
             )
             else when (data.value) {
                 null -> throw ValueIsNullException()

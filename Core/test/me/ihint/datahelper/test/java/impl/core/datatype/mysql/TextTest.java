@@ -24,7 +24,7 @@ public class TextTest {
         data.setValue("123");
         assert (data.verify(false) == true);
         assert (data.verify(true) == true);
-        assert (TEXT.INSTANCE.toEntry(data).getValue().equals("`123`"));
+        assert (TEXT.INSTANCE.toEntry(data).getValue().equals("'123'"));
 
         config.set("max", 5);
         data = field.newData("12345");

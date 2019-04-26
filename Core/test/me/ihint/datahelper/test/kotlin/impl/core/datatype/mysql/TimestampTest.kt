@@ -31,7 +31,7 @@ object TimestampTest {
         data = field.newData("2011-12-03T10:15:30.000Z")
         assert(data.verify(false) == true)
         assert(data.verify(true) == true)
-        assert(TIMESTAMP.toEntry(data).value == "`2011/12/03 10:15:30`")
+        assert(TIMESTAMP.toEntry(data).value == "'2011/12/03 10:15:30'")
 
         data.value = "2011/12/03 10:15:30"
         assert(data.verify(false) == false)

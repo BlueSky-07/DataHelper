@@ -26,7 +26,7 @@ object VarcharTest {
         data.value = "123"
         assert(data.verify(false) == true)
         assert(data.verify(true) == true)
-        assert(VARCHAR.toEntry(data).value == "`123`")
+        assert(VARCHAR.toEntry(data).value == "'123'")
 
         data.value = "123456"
         assert(data.verify(false) == false)
@@ -44,7 +44,7 @@ object VarcharTest {
         data = field.newData("123")
         assert(data.verify(false) == true)
         assert(data.verify(true) == true)
-        assert(VARCHAR.toEntry(data).value == "`123`")
+        assert(VARCHAR.toEntry(data).value == "'123'")
 
         data = Field("fieldname", VARCHAR, SimpleConfig()).newData()
         data.value = "123"
