@@ -25,4 +25,7 @@ fun testGroupMysql() {
 
 fun testCompilerMysql() {
     InsertTest.test()
+    UpdateTest.test()
+    SelectTest.test()
+    DeleteTest.test()
 }

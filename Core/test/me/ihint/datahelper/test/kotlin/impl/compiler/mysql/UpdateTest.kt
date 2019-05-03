@@ -10,7 +10,7 @@ import me.ihint.datahelper.impl.core.group.mysql.Struct
 import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 
-object InsertTest {
+object UpdateTest {
     private var struct: Struct
     private val FORMATTER_ISO = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private val FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
@@ -55,17 +55,24 @@ object InsertTest {
 
     fun test() {
         testCase1()
-        println("Insert tests passed")
+        println("Update tests passed")
     }
 
     fun testCase1() {
-        val record: Record = struct.newRecord()
-        record["varchar"] = "HelloKotlinLang1"
-        record["integer"] = "7"
-        record["boolean"] = "true"
-        record["double"] = "1.87654321"
-        record["text"] = "This is SQL Script Generator: \n\\'Hello World'"
-        record["timestamp"] = "2011-12-03T10:15:30.000Z"
-        println(SQLCompiler.insert(record))
+        val target: Record = struct.newRecord()
+        target["varchar"] = "HelloKotlinLang1"
+        target["integer"] = "7"
+        target["boolean"] = "true"
+        target["double"] = "1.87654321"
+        target["text"] = "This is SQL Script Generator: \n\\'Hello World'"
+        target["timestamp"] = "2011-12-03T10:15:30.000Z"
+        val condition: Record = struct.newRecord()
+        condition["varchar"] = "HelloKotlinLang1"
+        condition["integer"] = "7"
+        condition["boolean"] = "true"
+        condition["double"] = "1.87654321"
+        condition["text"] = "This is SQL Script Generator: \n\\'Hello World'"
+        condition["timestamp"] = "2011-12-03T10:15:30.000Z"
+        println(SQLCompiler.update(target, condition))
     }
 }
