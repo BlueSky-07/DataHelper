@@ -1,10 +1,17 @@
 package me.ihint.datahelper.test.kotlin.impl.parser.mysql
 
 import me.ihint.datahelper.impl.parser.mysql.SQLParser
+import java.time.format.DateTimeFormatter
 
 object ParserTest{
     fun test () {
-        val tables = SQLParser("default").parseFromFile("/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt", "utf-8")
+        val tables = SQLParser("default")
+                .parseFromFile(
+                        "/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt",
+                        "utf8",
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
+                        DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
+                )
         tables.forEach {
             run {
                 println(it)

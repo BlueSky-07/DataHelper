@@ -12,6 +12,7 @@ import me.ihint.datahelper.impl.core.group.mysql.Struct
 import me.ihint.datahelper.exception.ParserException
 import java.io.File
 import java.io.FileNotFoundException
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
@@ -21,17 +22,23 @@ class SQLParser(
 ) {
     private var structList: SimpleBundle<Struct> = SimpleBundle()
 
+    // input scanner
     private var input: Scanner? = null
 
+    // current line
     private var lineIndex: Int = 0
     private var line: String? = null
 
-    // current information
+    // current table
     private var tableName: String? = null
     private var fieldList: SimpleBundle<Field>? = null
     private var orderList: ArrayList<Field>? = null
     private var requiredList: ArrayList<Field>? = null
     private var isTableReading: Boolean = false
+
+    // DateTimeFormatter
+    private var readDateTimeFormatter: DateTimeFormatter? = null
+    private var writeDateTimeFormatter: DateTimeFormatter? = null
 
     private fun getNextLine() {
         ++lineIndex
@@ -47,10 +54,12 @@ class SQLParser(
         }
     }
 
-    public fun parseFromFile(filePath: String, charset: String): Bundle<Struct> {
+    public fun parseFromFile(filePath: String, charset: String, readDateTimeFormatter: DateTimeFormatter, writeDateTimeFormatter: DateTimeFormatter): Bundle<Struct> {
         setInputPath(filePath, charset)
+        this.readDateTimeFormatter = readDateTimeFormatter
+        this.writeDateTimeFormatter = writeDateTimeFormatter
+
         structList = SimpleBundle()
-        lineIndex = 0
 
         tableName = ""
         fieldList = SimpleBundle()
@@ -58,11 +67,14 @@ class SQLParser(
         requiredList = ArrayList()
         isTableReading = false
 
+        lineIndex = 0
         getNextLine()
         while (line != null) {
             parse()
             getNextLine()
         }
+
+        input!!.close()
 
         return structList
     }
@@ -218,7 +230,12 @@ class SQLParser(
                 }
 
                 if (dataType is VARCHAR && field.config["length"] == null) {
-                    throwError(ParserException("a field of VARCHAR must set length"))
+                    throwError(ParserException("field of VARCHAR must set `length`"))
+                }
+
+                if (dataType is TIMESTAMP) {
+                    field.config["read"] = readDateTimeFormatter!!
+                    field.config["write"] = writeDateTimeFormatter!!
                 }
 
                 fieldList!![fieldName] = field
