@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.ConfigException
  *      check validity of item name
  */
 
-open class ItemNotFoundException : ConfigException()
+open class ItemNotFoundException(
+        key: String
+) : ConfigException(
+        "`$key` has not been set yet"
+)

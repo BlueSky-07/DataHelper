@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.ConfigException
  *      check validity of item value
  */
 
-open class ItemNotValidException : ConfigException()
+open class ItemNotValidException(
+        key: String, type: String
+) : ConfigException(
+        "`$key` must be set as an instance of $type"
+)

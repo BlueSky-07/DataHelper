@@ -17,7 +17,7 @@ import me.ihint.datahelper.exception.ParserException
  */
 
 open class MultipleDefinitionException(
-        val fieldName: String
+        fieldName: String
 ) : ParserException(
         "`$fieldName` has been defined before"
 )

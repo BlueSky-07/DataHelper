@@ -10,7 +10,7 @@ import java.lang.String.join
 
 object SQLCompiler : SQLCompiler<Record> {
     override fun insert(record: Record): String {
-        if (record.count(false) == 0) throw RecordIsEmptyException()
+        if (record.count(false) == 0) throw RecordIsEmptyException(record.toString())
         record.verify(true)
         val requiredList = record.getRequiredList()
         if (requiredList != null && requiredList.isNotEmpty()) {
@@ -19,7 +19,7 @@ object SQLCompiler : SQLCompiler<Record> {
                     val fieldName = field.name
                     when (record.verify(fieldName, false)) {
                         true -> return@run
-                        else -> throw InsertRequireValueException()
+                        else -> throw InsertRequireValueException(fieldName)
                     }
                 }
             }
@@ -41,8 +41,8 @@ object SQLCompiler : SQLCompiler<Record> {
             }
 
     override fun update(target: Record, condition: Record): String {
-        if (target.count(false) == 0 || condition.count(false) == 0)
-            throw RecordIsEmptyException()
+        if (target.count(false) == 0) throw RecordIsEmptyException(target.toString())
+        if (condition.count(false) == 0) throw RecordIsEmptyException(condition.toString())
         target.verify(true)
         condition.verify(true)
         val targetDataSet = newSQLDataSet(target)
@@ -74,7 +74,7 @@ object SQLCompiler : SQLCompiler<Record> {
     }
 
     override fun select(condition: Record, offset: Long, size: Long): String {
-        if (offset < 0 || size < 0) throw SelectLimitNotValidException()
+        if (offset < 0 || size < 0) throw SelectLimitNotValidException(offset, size)
         val sql = select(condition)
         return "${
         sql.substring(0, sql.lastIndex)
@@ -82,7 +82,7 @@ object SQLCompiler : SQLCompiler<Record> {
     }
 
     override fun delete(condition: Record): String {
-        if (condition.count(false) == 0) throw RecordIsEmptyException()
+        if (condition.count(false) == 0) throw RecordIsEmptyException(condition.toString())
         condition.verify(true)
         val dataSet = newSQLDataSet(condition)
         return "DELETE FROM `${

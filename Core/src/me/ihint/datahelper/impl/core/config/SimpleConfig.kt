@@ -23,7 +23,7 @@ class SimpleConfig : Config {
 
     override operator fun set(key: String, value: Any) =
             when (config.containsKey(key)) {
-                true -> throw ItemAlreadySetException()
+                true -> throw ItemAlreadySetException(key)
                 else -> config[key] = value
             }
 

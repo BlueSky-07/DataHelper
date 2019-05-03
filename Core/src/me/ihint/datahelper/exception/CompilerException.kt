@@ -13,4 +13,4 @@ package me.ihint.datahelper.exception
  *      check value of Group<Data>
  */
 
-open class CompilerException : DataHelperException()
+open class CompilerException(message: String) : DataHelperException(message)

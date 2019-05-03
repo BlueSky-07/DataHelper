@@ -17,7 +17,7 @@ import me.ihint.datahelper.exception.ParserException
  */
 
 open class DataTypeNotValidException(
-        val dataTypeName: String
+        dataTypeName: String
 ) : ParserException(
         "\"$dataTypeName\" is not a valid DataType"
 )

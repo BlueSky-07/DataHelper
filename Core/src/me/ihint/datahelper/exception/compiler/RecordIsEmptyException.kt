@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.CompilerException
  *      set at least one data before
  */
 
-open class RecordIsEmptyException : CompilerException()
+open class RecordIsEmptyException(
+        source: String
+) : CompilerException(
+        "no valid data found in record: $source"
+)

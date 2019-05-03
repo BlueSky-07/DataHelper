@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.CompilerException
  *      set value before using it
  */
 
-open class InsertRequireValueException : CompilerException()
+open class InsertRequireValueException(
+        fieldName: String
+) : CompilerException(
+        "value of `$fieldName` must be set"
+)

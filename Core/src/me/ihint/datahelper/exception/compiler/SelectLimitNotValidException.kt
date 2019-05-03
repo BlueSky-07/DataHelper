@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.CompilerException
  *      check limit or size
  */
 
-open class SelectLimitNotValidException : CompilerException()
+open class SelectLimitNotValidException(
+        offset: Long, size: Long
+) : CompilerException(
+        "`offset` and `size` must be positive, input is {offset: $offset, size: $size}"
+)

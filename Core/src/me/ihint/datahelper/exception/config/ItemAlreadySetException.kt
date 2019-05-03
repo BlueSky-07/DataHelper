@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.ConfigException
  *      abort operation
  */
 
-open class ItemAlreadySetException : ConfigException()
+open class ItemAlreadySetException(
+        key: String
+) : ConfigException(
+        "`$key` has already been set"
+)

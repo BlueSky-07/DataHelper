@@ -1,5 +1,6 @@
 package me.ihint.datahelper.exception.verify
 
+import me.ihint.datahelper.core.DataType
 import me.ihint.datahelper.exception.VerifyNotPassException
 
 /**
@@ -16,4 +17,8 @@ import me.ihint.datahelper.exception.VerifyNotPassException
  *      set value before using it
  */
 
-open class ValueIsNullException : VerifyNotPassException()
+open class ValueIsNullException(
+        dataType: DataType
+) : VerifyNotPassException(
+        null, dataType
+)

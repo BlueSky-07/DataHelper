@@ -1,5 +1,7 @@
 package me.ihint.datahelper.exception
 
+import me.ihint.datahelper.core.DataType
+
 /**
  * VerifyNotPassException
  *     : DataHelperException
@@ -13,4 +15,14 @@ package me.ihint.datahelper.exception
  *      check value
  */
 
-open class VerifyNotPassException : DataHelperException()
+open class VerifyNotPassException(
+        value: String?,
+        dataType: DataType
+) : DataHelperException(
+        "${
+        when(value) {
+            null -> "null"
+            else -> "\"$value\""
+        }
+        } is not a valid value of ${dataType.javaClass.name}"
+)

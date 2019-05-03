@@ -41,7 +41,7 @@ object TEXT : MysqlDataType() {
                     }'"
             )
             else when (data.value) {
-                null -> throw ValueIsNullException()
-                else -> throw VerifyNotPassException()
+                null -> throw ValueIsNullException(this)
+                else -> throw VerifyNotPassException(data.value!!, this)
             }
 }

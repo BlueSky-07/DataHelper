@@ -25,7 +25,7 @@ class Struct(
 
     fun getTableName(): String? = when (val tableName: Any? = config["#table-name"]) {
         is String? -> tableName
-        else -> throw ItemNotValidException()
+        else -> throw ItemNotValidException("#table-name", "String")
     }
 
     fun setTableName(tableName: String) {
@@ -35,7 +35,7 @@ class Struct(
     @Suppress("UNCHECKED_CAST")
     fun getRequiredList(): List<Field>? = when (val requiredList: Any? = config["#required-list"]) {
         is List<*>? -> requiredList as List<Field>?
-        else -> throw ItemNotValidException()
+        else -> throw ItemNotValidException("#required-list", "List<Field>")
     }
 
     fun setRequiredList(list: List<Field>) {
@@ -45,7 +45,7 @@ class Struct(
     @Suppress("UNCHECKED_CAST")
     fun getOrderList(): List<Field>? = when (val orderList: Any? = config["#order-list"]) {
         is List<*>? -> orderList as List<Field>?
-        else -> throw ItemNotValidException()
+        else -> throw ItemNotValidException("#order-list", "List<Field>")
     }
 
     fun setOrderList(list: List<Field>) {

@@ -13,4 +13,4 @@ package me.ihint.datahelper.exception
  *      check exception's detail
  */
 
-open class ConfigException : DataHelperException()
+open class ConfigException(message: String) : DataHelperException(message)
