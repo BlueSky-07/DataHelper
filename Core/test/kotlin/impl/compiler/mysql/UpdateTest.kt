@@ -1,4 +1,4 @@
-package me.ihint.datahelper.test.me.ihint.datahelper.test.kotlin.impl.compiler.mysql
+package me.ihint.datahelper.test.kotlin.impl.compiler.mysql
 
 import me.ihint.datahelper.core.Field
 import me.ihint.datahelper.impl.compiler.mysql.SQLCompiler
@@ -8,14 +8,13 @@ import me.ihint.datahelper.impl.core.datatype.mysql.*
 import me.ihint.datahelper.impl.core.group.mysql.Record
 import me.ihint.datahelper.impl.core.group.mysql.Struct
 import java.time.format.DateTimeFormatter
-import java.util.*
 import java.util.regex.Pattern
 
-object SelectTest {
+object UpdateTest {
     private var struct: Struct
     private val FORMATTER_ISO = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private val FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
-    
+
     init {
         val fields = SimpleBundle<Field>()
         fields["id"] = Field("id", INTEGER, SimpleConfig())
@@ -28,7 +27,6 @@ object SelectTest {
         val configOfInteger = SimpleConfig()
         configOfInteger["min"] = 0
         configOfInteger["max"] = 10
-        configOfInteger["order"] = "ASC"
         fields["integer"] = Field("integer", INTEGER, configOfInteger)
 
         val configOfBoolean = SimpleConfig()
@@ -38,7 +36,6 @@ object SelectTest {
         configOfDouble["min"] = 1.5
         configOfDouble["max"] = 2.5
         configOfDouble["fix"] = 3
-        configOfDouble["order"] = "DESC"
         fields["double"] = Field("double", DOUBLE, configOfDouble)
 
         val configOfText = SimpleConfig()
@@ -53,20 +50,29 @@ object SelectTest {
 
         struct = Struct(fields, SimpleConfig())
         struct.setTableName("test_table_name")
-        @Suppress("UNCHECKED_CAST")
-        struct.setOrderList(Arrays.asList(fields["integer"], fields["double"]) as List<Field>)
     }
 
 
     fun test() {
         testCase1()
-        println("Select tests passed")
+        println("Update tests passed")
     }
 
     fun testCase1() {
+        val target: Record = struct.newRecord()
+        target["varchar"] = "HelloKotlinLang1"
+        target["integer"] = "7"
+        target["boolean"] = "true"
+        target["double"] = "1.87654321"
+        target["text"] = "This is SQL Script Generator: \n\\'Hello World'"
+        target["timestamp"] = "2011-12-03T10:15:30.000Z"
         val condition: Record = struct.newRecord()
-        condition["id"] = "123"
-        println(SQLCompiler.select(condition))
-        println(SQLCompiler.select(condition, 1, 10))
+        condition["varchar"] = "HelloKotlinLang1"
+        condition["integer"] = "7"
+        condition["boolean"] = "true"
+        condition["double"] = "1.87654321"
+        condition["text"] = "This is SQL Script Generator: \n\\'Hello World'"
+        condition["timestamp"] = "2011-12-03T10:15:30.000Z"
+        println(SQLCompiler.update(target, condition))
     }
 }

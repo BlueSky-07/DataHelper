@@ -5,6 +5,6 @@ import kotlin.annotation.Retention
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD)
-annotation class Lang (
+annotation class Lang(
         val lang: String = "mysql"
 )

@@ -1,4 +1,4 @@
-package me.ihint.datahelper.test.me.ihint.datahelper.test.kotlin.impl.compiler.mysql
+package me.ihint.datahelper.test.kotlin.impl.compiler.mysql
 
 import me.ihint.datahelper.core.Field
 import me.ihint.datahelper.impl.compiler.mysql.SQLCompiler

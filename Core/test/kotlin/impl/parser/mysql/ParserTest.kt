@@ -3,8 +3,8 @@ package me.ihint.datahelper.test.kotlin.impl.parser.mysql
 import me.ihint.datahelper.impl.parser.mysql.SQLParser
 import java.time.format.DateTimeFormatter
 
-object ParserTest{
-    fun test () {
+object ParserTest {
+    fun test() {
         val tables = SQLParser()
                 .parseFromFile(
                         "/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt",

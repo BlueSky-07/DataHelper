@@ -20,7 +20,7 @@ open class VerifyNotPassException(
         dataType: DataType
 ) : DataHelperException(
         "${
-        when(value) {
+        when (value) {
             null -> "null"
             else -> "\"$value\""
         }

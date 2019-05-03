@@ -3,13 +3,15 @@ package me.ihint.datahelper.test.kotlin
 import me.ihint.datahelper.test.kotlin.impl.core.datatype.mysql.*
 import me.ihint.datahelper.test.kotlin.impl.core.group.mysql.*
 import me.ihint.datahelper.test.kotlin.impl.parser.mysql.ParserTest
-import me.ihint.datahelper.test.me.ihint.datahelper.test.kotlin.impl.compiler.mysql.*
+import me.ihint.datahelper.test.kotlin.impl.compiler.mysql.*
+import me.ihint.datahelper.test.kotlin.impl.helper.SQLHelperTest
 
 fun main(args: Array<String>) {
     testDatatypeMysql()
     testGroupMysql()
     testCompilerMysql()
     ParserTest.test()
+    SQLHelperTest.test()
 }
 
 fun testDatatypeMysql() {

@@ -29,7 +29,7 @@ class Data(
     fun verify(allowNull: Boolean): Boolean =
             type.verify(this, allowNull)
 
-    fun toEntry():Entry = type.toEntry(this)
+    fun toEntry(): Entry = type.toEntry(this)
 
     override fun toString(): String {
         return "$fieldName(${type.javaClass.simpleName}): $value"

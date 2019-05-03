@@ -64,7 +64,7 @@ object GroupTest {
         } catch (e: Exception) {
             assert(e is FieldNotFoundException)
         }
-    
+
         record.clear("username")
         assert(record.count(false) == 2)
         assert(record.count(true) == 3)

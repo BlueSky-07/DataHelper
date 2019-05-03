@@ -18,10 +18,10 @@ class Record(
         override val config: Config,
         private val struct: Struct
 ) : Group<Data> {
-    constructor(record: Record, clear: Boolean): this(
-        record.struct.newRecord().bundle,
-        record.struct.config,
-        record.struct
+    constructor(record: Record, clear: Boolean) : this(
+            record.struct.newRecord().bundle,
+            record.struct.config,
+            record.struct
     ) {
         if (clear) {
             record.bundle.forEach { (fieldName, data) ->
@@ -33,7 +33,7 @@ class Record(
         }
     }
 
-    constructor(record: Record): this(record, false)
+    constructor(record: Record) : this(record, false)
 
     operator fun get(fieldName: String): String? = when (bundle[fieldName]) {
         null -> throw FieldNotFoundException()
