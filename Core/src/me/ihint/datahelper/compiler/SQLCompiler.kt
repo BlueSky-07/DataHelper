@@ -36,7 +36,7 @@ interface SQLCompiler<G : Group<Data>> : Compiler {
     fun select(condition: G, offset: Long, size: Long): String
 
     /**
-     * DELETE FROM `$tableName`
+     * DELETE FROM `$tableName` WHERE TRUE $equations;
      */
     fun delete(condition: G): String
 }

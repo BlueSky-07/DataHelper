@@ -10,15 +10,7 @@ import me.ihint.datahelper.core.Bundle
  * directly use HashMap<String, T> to implement Bundle<T>
  */
 
-class SimpleBundle<T>() : Bundle<T>, HashMap<String, T>() {
-    constructor(simpleBundle: SimpleBundle<T>) : this() {
-        simpleBundle.forEach { (key, value) ->
-            run {
-                this[key] = value
-            }
-        }
-    }
-
+class SimpleBundle<T> : Bundle<T>, HashMap<String, T>() {
     override fun get(key: String): T? {
         return super.get(key)
     }

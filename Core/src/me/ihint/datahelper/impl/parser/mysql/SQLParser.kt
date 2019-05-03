@@ -10,6 +10,7 @@ import me.ihint.datahelper.impl.core.config.SimpleConfig
 import me.ihint.datahelper.impl.core.datatype.mysql.*
 import me.ihint.datahelper.impl.core.group.mysql.Struct
 import me.ihint.datahelper.exception.ParserException
+import me.ihint.datahelper.parser.SQLParser
 import java.io.File
 import java.io.FileNotFoundException
 import java.time.format.DateTimeFormatter
@@ -17,9 +18,7 @@ import java.util.*
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 
-class SQLParser(
-        val location: String // caller's name & property name
-) {
+class SQLParser : SQLParser<Struct> {
     private var structList: SimpleBundle<Struct> = SimpleBundle()
 
     // input scanner
@@ -54,7 +53,11 @@ class SQLParser(
         }
     }
 
-    public fun parseFromFile(filePath: String, charset: String, readDateTimeFormatter: DateTimeFormatter, writeDateTimeFormatter: DateTimeFormatter): Bundle<Struct> {
+    override fun parseFromFile(
+            filePath: String, charset: String,
+            readDateTimeFormatter: DateTimeFormatter,
+            writeDateTimeFormatter: DateTimeFormatter
+    ): Bundle<Struct> {
         setInputPath(filePath, charset)
         this.readDateTimeFormatter = readDateTimeFormatter
         this.writeDateTimeFormatter = writeDateTimeFormatter
@@ -163,12 +166,14 @@ class SQLParser(
                         field.config["order"] = order.toUpperCase()
                         orderList!!.add(field)
                     }
-                    else -> {}
+                    else -> {
+                    }
                 }
 
                 try {
                     when (val pattern = getConfigOfField(VERIFY)) {
-                        null -> {}
+                        null -> {
+                        }
                         else -> field.config["pattern"] = Pattern.compile(pattern)
                     }
                 } catch (e: PatternSyntaxException) {
@@ -177,9 +182,10 @@ class SQLParser(
 
                 try {
                     when (val min = getConfigOfField(MIN)) {
-                        null -> {}
+                        null -> {
+                        }
                         else -> {
-                            when(dataType) {
+                            when (dataType) {
                                 INTEGER -> field.config["min"] = Integer.valueOf(min)
                                 DOUBLE -> field.config["min"] = java.lang.Double.valueOf(min)
                             }
@@ -191,9 +197,10 @@ class SQLParser(
 
                 try {
                     when (val max = getConfigOfField(MAX)) {
-                        null -> {}
+                        null -> {
+                        }
                         else -> {
-                            when(dataType) {
+                            when (dataType) {
                                 INTEGER -> field.config["max"] = Integer.valueOf(max)
                                 DOUBLE -> field.config["max"] = java.lang.Double.valueOf(max)
                             }
@@ -205,9 +212,10 @@ class SQLParser(
 
                 try {
                     when (val fix = getConfigOfField(FIX)) {
-                        null -> {}
+                        null -> {
+                        }
                         else -> {
-                            when(dataType) {
+                            when (dataType) {
                                 DOUBLE -> field.config["fix"] = Integer.valueOf(fix)
                             }
                         }
@@ -218,9 +226,10 @@ class SQLParser(
 
                 try {
                     when (val length = getConfigOfField(LENGTH)) {
-                        null -> {}
+                        null -> {
+                        }
                         else -> {
-                            when(dataType) {
+                            when (dataType) {
                                 VARCHAR -> field.config["length"] = Integer.valueOf(length)
                             }
                         }
@@ -256,8 +265,6 @@ class SQLParser(
 
     private fun throwError(error: ParserException) {
         var message = ""
-        val locationPrefix = if (location.isEmpty()) "$location：" else ""
-        message += locationPrefix
         if (lineIndex != 0) {
             message += "Line $lineIndex：${error.message}"
         }

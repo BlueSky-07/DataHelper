@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 
 object ParserTest{
     fun test () {
-        val tables = SQLParser("default")
+        val tables = SQLParser()
                 .parseFromFile(
                         "/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt",
                         "utf8",
