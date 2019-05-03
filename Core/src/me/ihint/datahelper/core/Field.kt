@@ -26,6 +26,6 @@ class Field(
     )
 
     override fun toString(): String {
-        return "$name-${type.javaClass.simpleName}"
+        return "$name(${type.javaClass.simpleName})$config"
     }
 }

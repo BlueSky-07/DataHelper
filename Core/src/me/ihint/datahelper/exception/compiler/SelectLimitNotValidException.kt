@@ -1,10 +1,10 @@
 package me.ihint.datahelper.exception.compiler
 
-import me.ihint.datahelper.exception.VerifyNotPassException
+import me.ihint.datahelper.exception.CompilerException
 
 /**
  * SelectLimitNotValidException
- *     : VerifyNotPassException
+ *     : CompilerException
  *     : DataHelperException
  *     : Exception
  *     : Throwable(Serializable)
@@ -16,4 +16,4 @@ import me.ihint.datahelper.exception.VerifyNotPassException
  *      check limit or size
  */
 
-open class SelectLimitNotValidException : VerifyNotPassException()
+open class SelectLimitNotValidException : CompilerException()

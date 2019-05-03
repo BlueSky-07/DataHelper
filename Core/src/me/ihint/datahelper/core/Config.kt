@@ -11,7 +11,7 @@ interface Config {
     /**
      * set a value for a configured field
      */
-    fun set(key: String, value: Any): Any?
+    operator fun set(key: String, value: Any): Any?
 
     /**
      * get the value of a configured field

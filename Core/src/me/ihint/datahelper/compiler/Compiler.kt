@@ -1,7 +1,7 @@
 package me.ihint.datahelper.compiler
 
 /**
- * Compiler : class
+ * Compiler : interface
  *
  * a tool to translate Group<Data> into String
  */

@@ -4,9 +4,8 @@ import me.ihint.datahelper.core.Data
 import me.ihint.datahelper.core.Field
 import me.ihint.datahelper.core.Group
 import me.ihint.datahelper.exception.bundle.FieldNotFoundException
-import me.ihint.datahelper.exception.config.ItemNotValidException
-import me.ihint.datahelper.impl.core.bundle.SimpleBundle
-import me.ihint.datahelper.impl.core.config.SimpleConfig
+import me.ihint.datahelper.core.Bundle
+import me.ihint.datahelper.core.Config
 
 /**
  * Record(Group<Data>)
@@ -15,9 +14,10 @@ import me.ihint.datahelper.impl.core.config.SimpleConfig
  */
 
 class Record(
-        override val bundle: SimpleBundle<Data>,
-        override val config: SimpleConfig
-) : Group<Data>, MysqlProperties {
+        override val bundle: Bundle<Data>,
+        override val config: Config,
+        private val struct: Struct
+) : Group<Data> {
     operator fun get(fieldName: String): String? = when (bundle[fieldName]) {
         null -> throw FieldNotFoundException()
         else -> bundle[fieldName]!!.value
@@ -30,34 +30,11 @@ class Record(
         }
     }
 
-    override fun getTableName(): String? = when (val tableName: Any? = config["#table-name"]) {
-        is String? -> tableName
-        else -> throw ItemNotValidException()
-    }
+    fun getTableName(): String? = struct.getTableName()
 
-    override fun setTableName(tableName: String) {
-        config["#table-name"] = tableName
-    }
+    fun getRequiredList(): List<Field>? = struct.getRequiredList()
 
-    @Suppress("UNCHECKED_CAST")
-    override fun getNotNullList(): List<Field>? = when (val notNullList: Any? = config["#not-null-list"]) {
-        is List<*>? -> notNullList as List<Field>?
-        else -> throw ItemNotValidException()
-    }
-
-    override fun setNotNullList(list: List<Field>) {
-        config["#not-null-list"] = list
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun getOrderList(): List<Field>? = when (val orderList: Any? = config["#order-list"]) {
-        is List<*>? -> orderList as List<Field>?
-        else -> throw ItemNotValidException()
-    }
-
-    override fun setOrderList(list: List<Field>) {
-        config["#order-list"] = list
-    }
+    fun getOrderList(): List<Field>? = struct.getOrderList()
 
     fun clear() {
         bundle.forEach { (_, data) ->
@@ -100,5 +77,9 @@ class Record(
 
     fun verify(fieldName: String, allowNull: Boolean): Boolean {
         return bundle[fieldName]!!.verify(allowNull)
+    }
+
+    override fun toString(): String {
+        return bundle.values.toString() + ";" + config.toString()
     }
 }

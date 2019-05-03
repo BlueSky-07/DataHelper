@@ -12,9 +12,9 @@ object SQLCompiler : SQLCompiler<Record> {
     override fun insert(record: Record): String {
         if (record.count(false) == 0) throw RecordIsEmptyException()
         record.verify(true)
-        val notNullList = record.getNotNullList()
-        if (notNullList != null && notNullList.isNotEmpty()) {
-            notNullList.forEach { field ->
+        val requiredList = record.getRequiredList()
+        if (requiredList != null && requiredList.isNotEmpty()) {
+            requiredList.forEach { field ->
                 run {
                     val fieldName = field.name
                     when (record.verify(fieldName, false)) {

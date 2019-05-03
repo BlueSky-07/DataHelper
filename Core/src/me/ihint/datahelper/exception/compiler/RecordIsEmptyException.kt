@@ -1,10 +1,10 @@
 package me.ihint.datahelper.exception.compiler
 
-import me.ihint.datahelper.exception.VerifyNotPassException
+import me.ihint.datahelper.exception.CompilerException
 
 /**
  * RecordIsEmptyException
- *     : VerifyNotPassException
+ *     : CompilerException
  *     : DataHelperException
  *     : Exception
  *     : Throwable(Serializable)
@@ -16,4 +16,4 @@ import me.ihint.datahelper.exception.VerifyNotPassException
  *      set at least one data before
  */
 
-open class RecordIsEmptyException : VerifyNotPassException()
+open class RecordIsEmptyException : CompilerException()

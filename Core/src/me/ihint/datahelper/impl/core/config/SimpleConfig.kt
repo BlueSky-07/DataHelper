@@ -32,4 +32,6 @@ class SimpleConfig : Config {
                 true -> config[key]
                 else -> null
             }
+
+    override fun toString(): String = config.toString()
 }

@@ -1,8 +1,6 @@
 package me.ihint.datahelper.impl.core.group.mysql
 
-import me.ihint.datahelper.core.Data
-import me.ihint.datahelper.core.Field
-import me.ihint.datahelper.core.Group
+import me.ihint.datahelper.core.*
 import me.ihint.datahelper.exception.config.ItemNotValidException
 import me.ihint.datahelper.impl.core.bundle.SimpleBundle
 import me.ihint.datahelper.impl.core.config.SimpleConfig
@@ -14,43 +12,47 @@ import me.ihint.datahelper.impl.core.config.SimpleConfig
  */
 
 class Struct(
-        override val bundle: SimpleBundle<Field>,
-        override val config: SimpleConfig
-) : Group<Field>, MysqlProperties {
+        override val bundle: Bundle<Field>,
+        override val config: Config
+) : Group<Field> {
     fun newRecord() = Record(SimpleBundle<Data>().also {
         bundle.forEach { (fieldName, field) ->
             run {
                 it[fieldName] = field.newData()
             }
         }
-    }, SimpleConfig(config))
+    }, SimpleConfig(config as SimpleConfig), this)
 
-    override fun getTableName(): String? = when (val tableName: Any? = config["#table-name"]) {
+    fun getTableName(): String? = when (val tableName: Any? = config["#table-name"]) {
         is String? -> tableName
         else -> throw ItemNotValidException()
     }
 
-    override fun setTableName(tableName: String) {
+    fun setTableName(tableName: String) {
         config["#table-name"] = tableName
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun getNotNullList(): List<Field>? = when (val notNullList: Any? = config["#not-null-list"]) {
-        is List<*>? -> notNullList as List<Field>?
+    fun getRequiredList(): List<Field>? = when (val requiredList: Any? = config["#required-list"]) {
+        is List<*>? -> requiredList as List<Field>?
         else -> throw ItemNotValidException()
     }
 
-    override fun setNotNullList(list: List<Field>) {
-        config["#not-null-list"] = list
+    fun setRequiredList(list: List<Field>) {
+        config["#required-list"] = list
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun getOrderList(): List<Field>? = when (val orderList: Any? = config["#order-list"]) {
+    fun getOrderList(): List<Field>? = when (val orderList: Any? = config["#order-list"]) {
         is List<*>? -> orderList as List<Field>?
         else -> throw ItemNotValidException()
     }
 
-    override fun setOrderList(list: List<Field>) {
+    fun setOrderList(list: List<Field>) {
         config["#order-list"] = list
+    }
+
+    override fun toString(): String {
+        return bundle.values.toString() + ";" + config.toString()
     }
 }

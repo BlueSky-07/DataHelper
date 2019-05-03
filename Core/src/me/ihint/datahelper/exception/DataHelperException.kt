@@ -14,4 +14,9 @@ import java.lang.Exception
  *      check exception's detail
  */
 
-open class DataHelperException : Exception()
+open class DataHelperException : Exception {
+    internal constructor() : super()
+
+    internal constructor(message: String) : super(message)
+}
+

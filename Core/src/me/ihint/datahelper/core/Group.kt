@@ -1,7 +1,7 @@
 package me.ihint.datahelper.core
 
 /**
- * Group : class
+ * Group : interface
  *
  * a bundle of different data/fields, with properties
  */

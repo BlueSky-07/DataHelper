@@ -26,4 +26,6 @@ class SimpleBundle<T>() : Bundle<T>, HashMap<String, T>() {
     operator fun set(key: String, value: T): T? {
         return super.put(key, value)
     }
+
+    override fun toString(): String = super.toString()
 }

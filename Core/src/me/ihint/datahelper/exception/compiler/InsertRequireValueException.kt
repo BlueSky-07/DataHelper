@@ -1,10 +1,10 @@
 package me.ihint.datahelper.exception.compiler
 
-import me.ihint.datahelper.exception.VerifyNotPassException
+import me.ihint.datahelper.exception.CompilerException
 
 /**
  * InsertRequireValueException
- *     : VerifyNotPassException
+ *     : CompilerException
  *     : DataHelperException
  *     : Exception
  *     : Throwable(Serializable)
@@ -16,4 +16,4 @@ import me.ihint.datahelper.exception.VerifyNotPassException
  *      set value before using it
  */
 
-open class InsertRequireValueException : VerifyNotPassException()
+open class InsertRequireValueException : CompilerException()
