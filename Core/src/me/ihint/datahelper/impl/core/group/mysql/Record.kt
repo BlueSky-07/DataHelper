@@ -23,7 +23,7 @@ class Record(
             record.struct.config,
             record.struct
     ) {
-        if (clear) {
+        if (!clear) {
             record.bundle.forEach { (fieldName, data) ->
                 run {
                     if (data.value != null)
