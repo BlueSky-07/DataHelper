@@ -6,7 +6,7 @@ package me.ihint.datahelper.core
  * a unit, including value, field name, data type, and its field's config
  */
 
-class Data(
+open class Data(
         var value: String?,
         val field: Field
 ) {

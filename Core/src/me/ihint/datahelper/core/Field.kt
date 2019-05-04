@@ -6,7 +6,7 @@ package me.ihint.datahelper.core
  * a definition of one data, including name, data type, and config
  */
 
-class Field(
+open class Field(
         val name: String,
         val type: DataType,
         val config: Config
