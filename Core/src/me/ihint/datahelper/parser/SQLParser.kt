@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter
 
 interface SQLParser<G : Group<Field>> : Parser {
     fun parseFromFile(
-            filePath: String, charset: String,
-            readDateTimeFormatter: DateTimeFormatter,
-            writeDateTimeFormatter: DateTimeFormatter
+            path: String, charset: String,
+            dateTimeFormatterInput: DateTimeFormatter,
+            dateTimeFormatterOutput: DateTimeFormatter
     ): Bundle<G>
 }

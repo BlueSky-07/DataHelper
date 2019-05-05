@@ -3,7 +3,7 @@ package me.ihint.datahelper.impl.helper
 import me.ihint.datahelper.DataHelper
 import me.ihint.datahelper.annotation.DateTime
 import me.ihint.datahelper.annotation.Lang
-import me.ihint.datahelper.annotation.Path
+import me.ihint.datahelper.annotation.File
 import me.ihint.datahelper.compiler.SQLCompiler
 import me.ihint.datahelper.parser.SQLParser
 import me.ihint.datahelper.core.Bundle
@@ -12,29 +12,55 @@ import me.ihint.datahelper.impl.core.group.mysql.Record
 import me.ihint.datahelper.impl.core.group.mysql.Struct
 import java.time.format.DateTimeFormatter
 
-class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>>() {
+class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>> {
     // flag for avoid repeat settings
     private var pathSet = false
     private var dateTimeSet = false
     private var langSet = false
 
-    // @Path
-    private var file: String = ""
-    private var charset: String = ""
+    // @File
+    var inputFilePath: String? = null
+    var inputFileCharset: String? = null
 
     // @DateTime
-    private var readDateTimeFormatter: DateTimeFormatter? = null
-    private var writeDateTimeFormatter: DateTimeFormatter? = null
-
-    // Struct List
-    private var structList: Bundle<Struct>? = null
+    var dateTimeFormatterInput: DateTimeFormatter? = null
+    var dateTimeFormatterOutput: DateTimeFormatter? = null
 
     // SQLCompiler & SQLParser
-    override var compiler: SQLCompiler<Record>? = null
-    override var parser: SQLParser<Struct>? = null
+    public override var compiler: SQLCompiler<Record>? = null
+    public override var parser: SQLParser<Struct>? = null
 
+    constructor()
+
+    constructor(
+            inputFilePath: String,
+            inputFileCharset: String,
+            dateTimeFormatterInput: DateTimeFormatter,
+            dateTimeFormatterOutput: DateTimeFormatter,
+            compiler: SQLCompiler<Record>,
+            parser: SQLParser<Struct>
+    ) : this() {
+        this.inputFilePath = inputFilePath
+        this.inputFileCharset = inputFileCharset
+        this.dateTimeFormatterInput = dateTimeFormatterInput
+        this.dateTimeFormatterOutput = dateTimeFormatterOutput
+        this.compiler = compiler
+        this.parser = parser
+    }
+
+    // Struct List
+    var structList: Bundle<Struct>? = null
+
+    /**
+     * get struct by tableName
+     *
+     * null will be returned if it does not exist
+     */
     operator fun get(tableName: String): Struct? = structList!![tableName]
 
+    /**
+     * init helper by annotation
+     */
     fun init(caller: Any, name: String) {
         val callerClass = caller.javaClass
         location = callerClass.name + "." + name
@@ -53,13 +79,13 @@ class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>>() {
 
                 for (annotation in field.declaredAnnotations) {
                     when (annotation.annotationClass) {
-                        Path::class -> {
+                        File::class -> {
                             if (pathSet) {
-                                throw InitializationException("`@Path` has already been set")
+                                throw InitializationException("`@File` has already been set")
                             }
-                            val a = annotation as Path
-                            file = a.file
-                            charset = a.charset
+                            val a = annotation as File
+                            inputFilePath = a.path
+                            inputFileCharset = a.charset
                             pathSet = true
                         }
                         DateTime::class -> {
@@ -67,8 +93,8 @@ class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>>() {
                                 throw InitializationException("`@DateTime` has already been set")
                             }
                             val a = annotation as DateTime
-                            readDateTimeFormatter = DateTimeFormatter.ofPattern(a.read)
-                            writeDateTimeFormatter = DateTimeFormatter.ofPattern(a.write)
+                            dateTimeFormatterInput = DateTimeFormatter.ofPattern(a.input)
+                            dateTimeFormatterOutput = DateTimeFormatter.ofPattern(a.output)
                             dateTimeSet = true
                         }
                         Lang::class -> {
@@ -99,7 +125,7 @@ class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>>() {
         }
 
         if (!pathSet)
-            throw InitializationException("`@Path` not set")
+            throw InitializationException("`@File` not set")
 
         if (!dateTimeSet)
             throw InitializationException("`@DateTime` not set")
@@ -107,49 +133,35 @@ class SQLHelper : DataHelper<SQLCompiler<Record>, SQLParser<Struct>>() {
         if (!langSet)
             throw InitializationException("`@Lang` not set")
 
-        structList = parser!!.parseFromFile(file, charset, readDateTimeFormatter!!, writeDateTimeFormatter!!)
+        init()
+    }
+
+    fun init() {
+        structList = parser!!.parseFromFile(inputFilePath!!, inputFileCharset!!, dateTimeFormatterInput!!, dateTimeFormatterOutput!!)
+        isInited = true
     }
 
     fun insert(record: Record): String = compiler!!.insert(record)
 
     fun insertThenGetId(record: Record): String = compiler!!.insert(record, true)
 
-    fun updateById(record: Record) =
+    fun updateById(record: Record): String =
             compiler!!.update(record, Record(record, true).also { it["id"] = record["id"]!! })
 
-    fun updateByCondition(target: Record, condition: Record) = compiler!!.update(target, condition)
+    fun updateByCondition(target: Record, condition: Record): String = compiler!!.update(target, condition)
 
-    fun selectById(condition: Record) =
+    fun selectById(condition: Record): String =
             compiler!!.select(Record(condition, true).also { it["id"] = condition["id"]!! })
 
-    fun selectByCondition(condition: Record) = compiler!!.select(condition)
+    fun selectByCondition(condition: Record): String = compiler!!.select(condition)
 
-    fun selectByIdLimit(condition: Record, offset: Long, size: Long) =
+    fun selectByIdLimit(condition: Record, offset: Long, size: Long): String =
             compiler!!.select(Record(condition, true).also { it["id"] = condition["id"]!! }, offset, size)
 
-    fun selectByConditionLimit(target: Record, offset: Long, size: Long) = compiler!!.select(target, offset, size)
+    fun selectByConditionLimit(target: Record, offset: Long, size: Long): String = compiler!!.select(target, offset, size)
 
-    fun deleteById(condition: Record) =
+    fun deleteById(condition: Record): String =
             compiler!!.delete(Record(condition, true).also { it["id"] = condition["id"]!! })
 
-    fun deleteByCondition(condition: Record) = compiler!!.delete(condition)
-
-    companion object {
-        fun insert(sqlHelper: SQLHelper, record: Record) = sqlHelper.insert(record)
-        fun insertThenGetId(sqlHelper: SQLHelper, record: Record) = sqlHelper.insertThenGetId(record)
-        fun updateById(sqlHelper: SQLHelper, record: Record) = sqlHelper.updateById(record)
-        fun updateByCondition(sqlHelper: SQLHelper, target: Record, condition: Record) =
-                sqlHelper.updateByCondition(target, condition)
-
-        fun selectById(sqlHelper: SQLHelper, condition: Record) = sqlHelper.selectById(condition)
-        fun selectByCondition(sqlHelper: SQLHelper, condition: Record) = sqlHelper.selectByCondition(condition)
-        fun selectByIdLimit(sqlHelper: SQLHelper, condition: Record, offset: Long, size: Long) =
-                sqlHelper.selectByIdLimit(condition, offset, size)
-
-        fun selectByConditionLimit(sqlHelper: SQLHelper, condition: Record, offset: Long, size: Long) =
-                sqlHelper.selectByConditionLimit(condition, offset, size)
-
-        fun deleteById(sqlHelper: SQLHelper, condition: Record) = sqlHelper.deleteById(condition)
-        fun deleteByCondition(sqlHelper: SQLHelper, condition: Record) = sqlHelper.deleteByCondition(condition)
-    }
+    fun deleteByCondition(condition: Record): String = compiler!!.delete(condition)
 }

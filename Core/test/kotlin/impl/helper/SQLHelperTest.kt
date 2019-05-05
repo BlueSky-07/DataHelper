@@ -2,12 +2,12 @@ package me.ihint.datahelper.test.kotlin.impl.helper
 
 import me.ihint.datahelper.annotation.DateTime
 import me.ihint.datahelper.annotation.Lang
-import me.ihint.datahelper.annotation.Path
+import me.ihint.datahelper.annotation.File
 import me.ihint.datahelper.impl.helper.SQLHelper
 
 object SQLHelperTest {
     class Test {
-        @Path("/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt")
+        @File("classpath:tables.txt")
         @DateTime
         @Lang
         val helper = SQLHelper()

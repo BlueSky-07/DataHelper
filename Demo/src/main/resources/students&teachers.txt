@@ -1,0 +1,32 @@
+# 学生表
+students {
+  # 姓名
+  name: VARCHAR @Length 10 @Required
+
+  # 身份证
+  card: TEXT @Verify ^\d{18}$
+
+  # 性别
+  gender: BOOLEAN @Required
+
+  # 生日
+  birthday: TIMESTAMP
+
+  # 身高：0 - 100
+  height: DOUBLE @Order DESC @Min 0 @Max 300 @Fix 1
+
+  # 唯一 ID
+  id: INTEGER @Order ASC
+}
+
+# 教师表
+teachers {
+  # 唯一 ID
+  id: INTEGER
+
+  # 姓名
+  name: VARCHAR @Length 20
+
+  # 年龄
+  age: INTEGER @Min 0 @Max 100
+}

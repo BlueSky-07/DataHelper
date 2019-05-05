@@ -16,4 +16,8 @@ import me.ihint.datahelper.exception.BundleException
  *      check validity of field name
  */
 
-open class FieldNotFoundException : BundleException()
+open class FieldNotFoundException(
+        fieldName: String, source: String
+) : BundleException(
+        "no such field named \"$fieldName\" in $source"
+)

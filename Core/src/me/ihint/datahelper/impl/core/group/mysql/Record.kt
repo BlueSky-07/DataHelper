@@ -6,6 +6,7 @@ import me.ihint.datahelper.core.Group
 import me.ihint.datahelper.exception.bundle.FieldNotFoundException
 import me.ihint.datahelper.core.Bundle
 import me.ihint.datahelper.core.Config
+import me.ihint.datahelper.exception.VerifyNotPassException
 
 /**
  * Record(Group<Data>)
@@ -36,13 +37,13 @@ class Record(
     constructor(record: Record) : this(record, false)
 
     operator fun get(fieldName: String): String? = when (bundle[fieldName]) {
-        null -> throw FieldNotFoundException()
+        null -> throw FieldNotFoundException(fieldName, struct.toString())
         else -> bundle[fieldName]!!.value
     }
 
     operator fun set(fieldName: String, value: String) {
         when (bundle[fieldName]) {
-            null -> throw FieldNotFoundException()
+            null -> throw FieldNotFoundException(fieldName, struct.toString())
             else -> bundle[fieldName]!!.value = value
         }
     }
@@ -62,7 +63,7 @@ class Record(
     }
 
     fun clear(fieldName: String) = when (val data = bundle[fieldName]) {
-        null -> throw FieldNotFoundException()
+        null -> throw FieldNotFoundException(fieldName, struct.toString())
         else -> data.clear()
     }
 
@@ -83,13 +84,12 @@ class Record(
     }
 
     fun verify(allowNull: Boolean): Boolean {
-        var result = true
         bundle.forEach { (_, data) ->
             run {
-                result = result && data.verify(allowNull)
+                if (!data.verify(allowNull)) throw VerifyNotPassException(data.value, data.type)
             }
         }
-        return result
+        return true
     }
 
     fun verify(fieldName: String, allowNull: Boolean): Boolean {

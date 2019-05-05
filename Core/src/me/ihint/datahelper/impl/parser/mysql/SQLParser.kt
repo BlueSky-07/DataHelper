@@ -36,8 +36,8 @@ class SQLParser : SQLParser<Struct> {
     private var isTableReading: Boolean = false
 
     // DateTimeFormatter
-    private var readDateTimeFormatter: DateTimeFormatter? = null
-    private var writeDateTimeFormatter: DateTimeFormatter? = null
+    private var dateTimeFormatterInput: DateTimeFormatter? = null
+    private var dateTimeFormatterOutput: DateTimeFormatter? = null
 
     private fun getNextLine() {
         ++lineIndex
@@ -54,13 +54,13 @@ class SQLParser : SQLParser<Struct> {
     }
 
     override fun parseFromFile(
-            filePath: String, charset: String,
-            readDateTimeFormatter: DateTimeFormatter,
-            writeDateTimeFormatter: DateTimeFormatter
+            path: String, charset: String,
+            dateTimeFormatterInput: DateTimeFormatter,
+            dateTimeFormatterOutput: DateTimeFormatter
     ): Bundle<Struct> {
-        setInputPath(filePath, charset)
-        this.readDateTimeFormatter = readDateTimeFormatter
-        this.writeDateTimeFormatter = writeDateTimeFormatter
+        setInputPath(path, charset)
+        this.dateTimeFormatterInput = dateTimeFormatterInput
+        this.dateTimeFormatterOutput = dateTimeFormatterOutput
 
         structList = SimpleBundle()
 
@@ -82,10 +82,10 @@ class SQLParser : SQLParser<Struct> {
         return structList
     }
 
-    private fun setInputPath(filePath: String, charset: String) {
-        var path = filePath
+    private fun setInputPath(path: String, charset: String) {
+        var filePath = path
         if (filePath.startsWith("classpath:")) {
-            path = filePath.substring("classpath:".length)
+            filePath = filePath.substring("classpath:".length)
             var cl: ClassLoader?
             try {
                 cl = Thread.currentThread().contextClassLoader
@@ -95,13 +95,13 @@ class SQLParser : SQLParser<Struct> {
                         cl = ClassLoader.getSystemClassLoader()
                     }
                 }
-                path = cl!!.getResource("")!!.path + path
+                filePath = cl!!.getResource("")!!.path + filePath
             } catch (e: Exception) {
                 throw FileNotFoundException()
             }
         }
 
-        input = Scanner(File(path), charset)
+        input = Scanner(File(filePath), charset)
     }
 
     private fun parse() {
@@ -243,8 +243,8 @@ class SQLParser : SQLParser<Struct> {
                 }
 
                 if (dataType is TIMESTAMP) {
-                    field.config["read"] = readDateTimeFormatter!!
-                    field.config["write"] = writeDateTimeFormatter!!
+                    field.config["input"] = dateTimeFormatterInput!!
+                    field.config["output"] = dateTimeFormatterOutput!!
                 }
 
                 fieldList!![fieldName] = field

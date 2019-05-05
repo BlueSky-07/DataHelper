@@ -4,14 +4,16 @@ import me.ihint.datahelper.core.Data
 import me.ihint.datahelper.core.Entry
 import me.ihint.datahelper.exception.verify.ValueIsNullException
 import me.ihint.datahelper.exception.VerifyNotPassException
+import java.util.regex.Pattern
 
 /**
  * TEXT : MysqlDataType(DataType)
  *
  * config: Config
  *      (FOR READING)
- *          ["max"] : Int?            // the max length of value
- *          ["min"] : Int?            // the min length of value
+ *               "max"] : Int?            // the max length of value
+ *              ["min"] : Int?            // the min length of value
+ *          ["pattern"] : Pattern?        // regex check when it set
  *
  *      (FOR GENERATING)
  */
@@ -24,9 +26,13 @@ object TEXT : MysqlDataType() {
                     val config = data.config
                     val max: Int? = config["max"] as Int?
                     val min: Int? = config["min"] as Int?
+                    val pattern: Pattern? = config["pattern"] as Pattern?
                     val length = value.length
                     when {
-                        (max != null && length >= max) || (min != null && length < min) -> false
+                        (max != null && length >= max)
+                                || (min != null && length < min)
+                                || (pattern != null && !pattern.matcher(data.value!!).matches())
+                        -> false
                         else -> true
                     }
                 }

@@ -12,10 +12,10 @@ import java.time.format.DateTimeFormatter
  *
  * config: Config
  *      (FOR READING)
- *           ["read"] : DateTimeFormatter        // required, reading format
+ *           ["input"] : DateTimeFormatter        // required, input formatter
  *
  *      (FOR GENERATING)
- *          ["write"] : DateTimeFormatter        // required, writing format
+ *          ["output"] : DateTimeFormatter        // required, output formatter
  */
 
 object TIMESTAMP : MysqlDataType() {
@@ -24,7 +24,7 @@ object TIMESTAMP : MysqlDataType() {
                 null -> allowNull
                 else -> {
                     val config = data.config
-                    val formatter: DateTimeFormatter = config["read"] as DateTimeFormatter
+                    val formatter: DateTimeFormatter = config["input"] as DateTimeFormatter
                     try {
                         LocalDateTime.parse(value, formatter)
                         true
@@ -37,8 +37,8 @@ object TIMESTAMP : MysqlDataType() {
     override fun toEntry(data: Data): Entry =
             if (verify(data, false)) Entry(
                     "`${data.fieldName}`",
-                    "'${LocalDateTime.parse(data.value!!, data.config["read"] as DateTimeFormatter)
-                            .format(data.config["write"] as DateTimeFormatter)
+                    "'${LocalDateTime.parse(data.value!!, data.config["input"] as DateTimeFormatter)
+                            .format(data.config["output"] as DateTimeFormatter)
                     }'"
             )
             else when (data.value) {

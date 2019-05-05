@@ -47,8 +47,8 @@ object SelectTest {
         fields["text"] = Field("text", TEXT, configOfText)
 
         val configOfTimeStamp = SimpleConfig()
-        configOfTimeStamp["read"] = FORMATTER_ISO
-        configOfTimeStamp["write"] = FORMATTER_TIMESTAMP
+        configOfTimeStamp["input"] = FORMATTER_ISO
+        configOfTimeStamp["output"] = FORMATTER_TIMESTAMP
         fields["timestamp"] = Field("timestamp", TIMESTAMP, configOfTimeStamp)
 
         struct = Struct(fields, SimpleConfig())

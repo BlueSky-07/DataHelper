@@ -26,8 +26,8 @@ object TimestampTest {
             assert(e is ValueIsNullException)
         }
 
-        config.set("read", FORMATTER_ISO)
-        config.set("write", FORMATTER_TIMESTAMP)
+        config.set("input", FORMATTER_ISO)
+        config.set("output", FORMATTER_TIMESTAMP)
         data = field.newData("2011-12-03T10:15:30.000Z")
         assert(data.verify(false) == true)
         assert(data.verify(true) == true)

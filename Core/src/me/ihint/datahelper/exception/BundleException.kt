@@ -13,4 +13,4 @@ package me.ihint.datahelper.exception
  *      check exception's detail
  */
 
-open class BundleException : DataHelperException()
+open class BundleException(message: String) : DataHelperException(message)

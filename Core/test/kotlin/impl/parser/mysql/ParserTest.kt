@@ -7,7 +7,7 @@ object ParserTest {
     fun test() {
         val tables = SQLParser()
                 .parseFromFile(
-                        "/Users/bluesky/workspace/DataHelper/Core/resources/tables.txt",
+                        "classpath:tables.txt",
                         "utf8",
                         DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"),
                         DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
